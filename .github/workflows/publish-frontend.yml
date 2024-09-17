@@ -46,9 +46,13 @@ jobs:
         with:
           images: ${{env.REGISTRY}}/${{env.OWNER_NAME}}/${{env.IMAGE_NAME}}
           tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-          flavor: |
-            latest=auto
+            type=semver,pattern={{major}}
+            type=sha
           
   
       - name: Build and push Docker image
